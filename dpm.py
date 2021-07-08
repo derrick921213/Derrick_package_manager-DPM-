@@ -1,4 +1,3 @@
-from platform import platform
 from sys import platform as plat
 
 
