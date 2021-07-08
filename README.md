@@ -1,1 +1,1 @@
-# Derrick Package Manager
+# Derrick Package Manager (DPM)
