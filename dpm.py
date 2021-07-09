@@ -90,7 +90,6 @@ def installed_package_list():
 
 def download_file(url):
     import requests as req
-    from tqdm import tqdm
     filename = url.split('/')[-1]
     r = req.get(url, stream=True)
     with open("/tmp/"+filename, 'wb') as f:
