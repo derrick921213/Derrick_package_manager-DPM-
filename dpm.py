@@ -182,6 +182,6 @@ def main():
 
 if __name__ == '__main__':
     if os.name == 'posix' and os.getuid() != 0:
-        print('ERROR: You must not run zhaoyun as root!')
+        print('ERROR: You must run as root!')
         sys.exit(1)
     main()
