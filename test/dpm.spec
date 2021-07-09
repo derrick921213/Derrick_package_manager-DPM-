@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['dpm.py'],
-             pathex=['/Users/derrick/Documents/program/python/package_manager/test'],
+             pathex=['/Users/derrick/.local/share/virtualenvs/package_manager-_W6B_IoJ/lib/python3.8/site-packages', '/Users/derrick/Documents/program/python/package_manager/test'],
              binaries=[],
              datas=[],
              hiddenimports=[],
