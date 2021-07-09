@@ -1,5 +1,3 @@
-#!/bin/bash
-
 from sys import platform as plat
 from urllib.request import urlopen
 import json
