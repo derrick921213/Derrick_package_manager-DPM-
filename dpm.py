@@ -15,25 +15,25 @@ def system_platform():
 def linux_shell(package, install=False, uninstall=False):
     if install is True and uninstall is False:
         if os.system("which apt >/dev/null") == 0:
-            if os.system(f"sudo apt install {package}") == 0:
+            if os.system(f"sudo apt install {package} -y") == 0:
                 print(f'[{package}] Install from apt')
         elif os.system("which dnf >/dev/null") == 0:
-            if os.system(f"sudo dnf install {package}") == 0:
+            if os.system(f"sudo dnf install {package} -y") == 0:
                 print(f'[{package}] Install from dnf')
         elif os.system("which yum >/dev/null") == 0:
-            if os.system(f"sudo yum install {package}") == 0:
+            if os.system(f"sudo yum install {package} -y") == 0:
                 print(f'[{package}] Install from yum')
         else:
             print('Package manager not found')
     elif install is False and uninstall is True:
         if os.system("which apt >/dev/null") == 0:
-            if os.system(f"sudo apt remove {package}") == 0:
+            if os.system(f"sudo apt remove {package} -y") == 0:
                 print(f'[{package}] Install from apt')
         elif os.system("which dnf >/dev/null") == 0:
-            if os.system(f"sudo dnf install {package}") == 0:
+            if os.system(f"sudo dnf install {package} -y") == 0:
                 print(f'[{package}] Install from dnf')
         elif os.system("which yum >/dev/null") == 0:
-            if os.system(f"sudo yum remove {package}") == 0:
+            if os.system(f"sudo yum remove {package} -y") == 0:
                 print(f'[{package}] Install from yum')
         else:
             print('Package manager not found')
