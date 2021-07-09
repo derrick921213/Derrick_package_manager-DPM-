@@ -1,11 +1,10 @@
 #!/bin/bash
+
 from sys import platform as plat
 from urllib.request import urlopen
 import json
 import sys
 import os
-import requests as req
-from tqdm import tqdm
 
 
 def system_platform():
@@ -47,7 +46,8 @@ def package_list():
 
 
 def download_file(url):
-
+    import requests as req
+    from tqdm import tqdm
     filename = url.split('/')[-1]
     r = req.get(url, stream=True)
     with open("/tmp/"+filename, 'wb') as f:
