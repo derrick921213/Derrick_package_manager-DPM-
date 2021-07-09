@@ -3,7 +3,7 @@
 ## Introduction
 
 DPM is a software manager, full name is Derrick Package Manager.  
-DPM can install on Linux or Mac, so only need to remember one command.
+DPM can install on **Linux or Mac**, so only need to remember one command.
 
 ## Install
 
