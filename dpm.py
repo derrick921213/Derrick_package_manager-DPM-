@@ -109,7 +109,7 @@ def install(package):
             file = os.system(f"cd /tmp;ls | grep '^dpm_{package}'")
             if file == 0:
                 success = os.system(
-                    f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;tar -xzvf $temp/$a -C /usr/local/DPM/{package};chmod -R 555 /usr/local/DPM/*;ln -s /usr/local/DPM/{package}/{package} /usr/local/bin;rm $temp/$a")
+                    f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;tar -xvf $temp/$a -C /usr/local/DPM/{package};chmod -R 555 /usr/local/DPM/*;ln -s /usr/local/DPM/{package}/{package} /usr/local/bin;rm $temp/$a")
             else:
                 print('Package NO Found')
                 sys.exit(1)
