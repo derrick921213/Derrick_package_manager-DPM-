@@ -28,10 +28,10 @@ def linux_shell(package, install=False, uninstall=False):
     elif install is False and uninstall is True:
         if os.system("which apt >/dev/null") == 0:
             if os.system(f"sudo apt remove {package} -y") == 0:
-                print(f'[{package}] Install from apt')
+                print(f'[{package}] Uninstall from apt')
         elif os.system("which dnf >/dev/null") == 0:
             if os.system(f"sudo dnf install {package} -y") == 0:
-                print(f'[{package}] Install from dnf')
+                print(f'[{package}] Uninstall from dnf')
         elif os.system("which yum >/dev/null") == 0:
             if os.system(f"sudo yum remove {package} -y") == 0:
                 print(f'[{package}] Install from yum')
