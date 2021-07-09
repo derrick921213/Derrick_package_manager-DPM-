@@ -94,8 +94,7 @@ def download_file(url):
     filename = url.split('/')[-1]
     r = req.get(url, stream=True)
     with open("/tmp/"+filename, 'wb') as f:
-        for data in tqdm(r.iter_content(1024)):
-            f.write(data)
+        f.write(r.content)
     return filename
 
 
