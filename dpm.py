@@ -107,7 +107,7 @@ def install(package):
             file = os.system(f"cd /tmp;ls | grep '^dpm_{package}'")
             if file == 0:
                 success = os.system(
-                    f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;tar -xvf $temp/$a -C /usr/local/DPM/{package};chmod -R 555 /usr/local/DPM/*;ln -s /usr/local/DPM/{package}/{package} /usr/local/bin;rm $temp/$a")
+                    f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;tar -xvf $temp/$a -C /usr/local/DPM/{package};sudo chmod -R 555 /usr/local/DPM/*;ln -s /usr/local/DPM/{package}/{package} /usr/local/bin;rm $temp/$a")
             else:
                 print('Package NO Found')
                 sys.exit(1)
@@ -181,7 +181,4 @@ def main():
 
 
 if __name__ == '__main__':
-    if os.name == 'posix' and os.getuid() != 0:
-        print('ERROR: You must run as root!')
-        sys.exit(1)
     main()
