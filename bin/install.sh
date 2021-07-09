@@ -1,4 +1,5 @@
 #!/bin/bash
+#__author__:derrick921213
 py=$(python3 -c "import os")
 
 if [ "$?" != '0' ]; then
@@ -15,3 +16,5 @@ if [ "$?" != "0" ]; then
 fi
 curl -O https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/dpm.py
 pyinstaller -F dpm.py
+sudo mv dist/dpm /usr/local/bin
+sudo chmod 755 /usr/local/bin/dpm
