@@ -9,7 +9,7 @@ if [ "$?" != '0' ]; then
 fi
 is_install=$(python3 -c "import pyinstaller")
 if [ "$?" != "0" ]; then
-    pip3 install pyinstaller requests >/dev/null
+    sudo pip3 install pyinstaller requests >/dev/null
     if [ "$?" != '0' ]; then
         echo "Pip3 Error"
         exit 1
