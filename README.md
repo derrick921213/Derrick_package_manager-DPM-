@@ -14,11 +14,11 @@ DPM can install on **Linux or Mac**, so only need to remember one command.
 
 ### Run below command to install DPM
 
-`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/install.sh)"`
+`/bin/bash -c "$(curl -fsSL -H "Cache-Control: no-cache" https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/install.sh)"`
 
 ## Uninstall
 
-`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/uninstall.sh)"`
+`/bin/bash -c "$(curl -fsSL -H "Cache-Control: no-cache" https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/uninstall.sh)"`
 
 ## Useage
 
