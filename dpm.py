@@ -189,6 +189,8 @@ def commands():
             uninstall(package)
         elif action == 'help':
             help()
+        elif action == 'update':
+            update()
         else:
             help()
 
