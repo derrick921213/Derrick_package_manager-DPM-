@@ -7,7 +7,12 @@ DPM can install on **Linux or Mac**, so only need to remember one command.
 
 ## Install
 
-`sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/install.sh)"`
+### Requirement
+
+- Ubuntu/Debain: **sudo apt install python3-pip**
+- CentOS/Red hat:**sudo yum|dnf install python3-pip**
+- Mac \*\*\*\*
+  `sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/install.sh)"`
 
 ## Uninstall
 
