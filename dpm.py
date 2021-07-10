@@ -66,6 +66,10 @@ def read_package_list(package):
         print(f'[{package}] not found!!')
 
 
+def version_check():
+    pass
+
+
 def package_list():
     import ssl
     ssl._create_default_https_context = ssl._create_unverified_context
@@ -82,8 +86,10 @@ def installed_package_list():
     if packages > 0:
         for i in installed_package:
             print(f"{i}")
+        return installed_package
     else:
         print("Try install some package")
+        sys.exit(1)
 
 
 def download_file(url):
@@ -125,16 +131,25 @@ def install(package):
 def uninstall(package):
     is_my = package_list()
     if package in is_my:
-        if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package}") == 0:
-            print(f"[{package}] Removed!!")
-        else:
-            print(f"Remove [{package}] Error!!")
+        if len(installed_package_list()) > 0:
+            if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package}") == 0:
+                print(f"[{package}] Removed!!")
+            else:
+                print(f"Remove [{package}] Error!!")
     else:
         system = system_platform()
         if system == 'linux':
             linux_shell(package, uninstall=True)
         elif system == 'darwin':
             mac_shell(package, uninstall=True)
+
+
+def update(package=None):
+    if package != None:
+        if os.system("curl -O https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/dpm.py;pyinstaller -F dpm.py;sudo rm -rf / usr/local/bin/dpm;sudo mv dist/dpm/ usr/local/bin;sudo rm -rf __pycache__ dist build dpm.spec dpm.py") == 0:
+            print(f"[DPM] self update successfully!!")
+        else:
+            print("Plaese download again")
 
 
 def help():
@@ -144,6 +159,7 @@ dpm search    ----Search package
 dpm uninstall ----Uninstall package
 dpm list      ----List installed package
 dpm help      ----This help page
+dpm update    ----Update package
 ''')
 
 
