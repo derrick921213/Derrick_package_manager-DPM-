@@ -22,9 +22,9 @@ DPM can install on **Linux or Mac**, so only need to remember one command.
 
 ## Useage
 
-- **sudo dpm install \<package\>** Install package
-- **sudo dpm uninstall \<package\>** Uninstall package
-- **sudo dpm search \<package\>** Search package from my repository
-- **sudo dpm search list** Show all package in my repository
-- **sudo dpm list** Show installed package (Only show install from my repository)
-- **sudo dpm help** Show help page
+- **dpm install \<package\>** Install package
+- **dpm uninstall \<package\>** Uninstall package
+- **dpm search \<package\>** Search package from my repository
+- **dpm search list** Show all package in my repository
+- **dpm list** Show installed package (Only show install from my repository)
+- **dpm help** Show help page
