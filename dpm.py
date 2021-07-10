@@ -160,6 +160,7 @@ dpm uninstall ----Uninstall package
 dpm list      ----List installed package
 dpm help      ----This help page
 dpm update    ----Update package
+dpm test
 ''')
 
 
