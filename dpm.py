@@ -146,7 +146,7 @@ def uninstall(package):
 
 def update(package=None):
     if package == None:
-        os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/update.sh)"')
+        os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/update.sh?$(date +%s))"')
         print(f"[DPM] self update successfully!!")
 
 
