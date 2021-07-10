@@ -1,6 +1,6 @@
 #!/bin/bash
 #__author__:derrick921213
-export PATH=~/.local/bin
+export PATH="~/.local/bin:$PATH"
 py=$(python3 -c "import os" >/dev/null)
 
 if [ "$?" != '0' ]; then
