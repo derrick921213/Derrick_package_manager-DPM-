@@ -6,7 +6,7 @@ if [ "$?" != '0' ]; then
     echo "Python not install"
     exit 1
 fi
-is_install=$(python3 -c "import pyinstaller" >/dev/null)
+is_install=$(python3 -c "import pyinstaller")
 if [ "$?" != "0" ]; then
     pip3 install pyinstaller requests >/dev/null
     if [ "$?" != '0' ]; then
