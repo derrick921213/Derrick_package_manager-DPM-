@@ -15,7 +15,7 @@ if [ "$?" != "0" ]; then
         exit 1
     fi
 fi
-curl -H "Cache-Control: no-cache" -O https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/dpm.py?$(date +%s)
+curl -H "Cache-Control: no-cache" -o dpm.py https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/dpm.py?$(date +%s)
 pyinstaller -F dpm.py >/dev/null
 if [ "$?" != "0" ]; then
     echo "Install Error!!"
