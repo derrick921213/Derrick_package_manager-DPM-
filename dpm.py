@@ -132,10 +132,13 @@ def uninstall(package):
     is_my = package_list()
     if package in is_my:
         if len(installed_package_list()) > 0:
-            if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package}") == 0:
-                print(f"[{package}] Removed!!")
+            if os.path.isdir(f"/usr/local/{package}"):
+                if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package}") == 0:
+                    print(f"[{package}] Removed!!")
+                else:
+                    print(f"Remove [{package}] Error!!")
             else:
-                print(f"Remove [{package}] Error!!")
+                print(f'[{package}] not installed')
     else:
         system = system_platform()
         if system == 'linux':
