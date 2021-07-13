@@ -34,27 +34,42 @@ def linux_shell(package, install=False, uninstall=False, update=False):
                 print(f'[{package}] Uninstall from dnf')
         elif os.system("which yum >/dev/null") == 0:
             if os.system(f"sudo yum remove {package} -y") == 0:
-                print(f'[{package}] Install from yum')
+                print(f'[{package}] Uninstall from yum')
         else:
             print('Package manager not found')
     elif install is False and uninstall is False and update is True:
-        pass
+        if os.system("which apt >/dev/null") == 0:
+            if os.system(f"sudo apt update {package} -y") == 0:
+                print(f'[{package}] update from apt')
+        elif os.system("which dnf >/dev/null") == 0:
+            if os.system(f"sudo dnf update {package} -y") == 0:
+                print(f'[{package}] update from dnf')
+        elif os.system("which yum >/dev/null") == 0:
+            if os.system(f"sudo yum update {package} -y") == 0:
+                print(f'[{package}] update from yum')
+        else:
+            print('Package manager not found')
     else:
         print("Application Error")
 
 
-def mac_shell(package, install=False, uninstall=False):
-    if install is True and uninstall is False:
+def mac_shell(package, install=False, uninstall=False, update=False):
+    if install is True and uninstall is False and update is False:
         if os.system("which brew >/dev/null") == 0:
             if os.system(f"brew install {package}") == 0:
                 print(f'[{package}] Install from Homebrew')
         else:
             print('Homebrew not found')
-    elif install is False and uninstall is True:
+    elif install is False and uninstall is True and update is False:
         if os.system(f"brew uninstall {package}") == 0:
             print(f'[{package}] was Removed from Homebrew')
         else:
             print(f"Remove [{package}] Error!!")
+    elif install is False and update is False and update is True:
+        if os.system(f"brew upgrade {package}") == 0:
+            print(f'[{package}] was Upgraded from Homebrew')
+        else:
+            print(f"Upgrade [{package}] Error!!")
     else:
         print("Application Error")
 
