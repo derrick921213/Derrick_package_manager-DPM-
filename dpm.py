@@ -12,8 +12,8 @@ def system_platform():
     return 'linux' if plat == 'linux' else 'darwin'
 
 
-def linux_shell(package, install=False, uninstall=False):
-    if install is True and uninstall is False:
+def linux_shell(package, install=False, uninstall=False, update=False):
+    if install is True and uninstall is False and update is False:
         if os.system("which apt >/dev/null") == 0:
             if os.system(f"sudo apt install {package} -y") == 0:
                 print(f'[{package}] Install from apt')
@@ -25,7 +25,7 @@ def linux_shell(package, install=False, uninstall=False):
                 print(f'[{package}] Install from yum')
         else:
             print('Package manager not found')
-    elif install is False and uninstall is True:
+    elif install is False and uninstall is True and update is False:
         if os.system("which apt >/dev/null") == 0:
             if os.system(f"sudo apt remove {package} -y") == 0:
                 print(f'[{package}] Uninstall from apt')
@@ -37,6 +37,8 @@ def linux_shell(package, install=False, uninstall=False):
                 print(f'[{package}] Install from yum')
         else:
             print('Package manager not found')
+    elif install is False and uninstall is False and update is True:
+        pass
     else:
         print("Application Error")
 
