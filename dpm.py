@@ -83,7 +83,7 @@ def read_package_list(package):
         print(f'[{package}] not found!!')
 
 
-def version_check():
+def read_package_info():
     pass
 
 
@@ -168,6 +168,20 @@ def update(package=None):
     if package == None:
         os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/update.sh?$(date +%s))"')
         print(f"[DPM] self update successfully!!")
+    else:
+        is_my = package_list()
+        if package in is_my:
+            if len(installed_package_list()) > 0:
+                if os.path.isdir(f"/usr/local/{package}"):
+                    pass
+                else:
+                    print(f'[{package}] not installed')
+        else:
+            system = system_platform()
+            if system == 'linux':
+                linux_shell(package, update=True)
+            elif system == 'darwin':
+                mac_shell(package, update=True)
 
 
 def help():
