@@ -82,8 +82,14 @@ class package_download:
         else:
             print(f'[{package}] not found!!')
 
-    def read_package_info(self):
-        pass
+    def read_package_info(self, package):
+        import subprocess
+        cmd = f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;cat `tar -tf $temp/$a | grep 'package.json'`"
+        output = subprocess.Popen(
+            cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        data = output.stdout.read().decode('utf-8')
+        data_json = json.loads(data)
+        return data_json
 
     def package_list(self):
         import ssl
@@ -115,7 +121,7 @@ class package_download:
 
 
 class Action:
-    def install(package):
+    def install(self, package):
         download = package_download()
         is_my = download.package_list()
         if package in is_my:
@@ -143,7 +149,7 @@ class Action:
             elif system == 'darwin':
                 shell.mac_shell(package, install=True)
 
-    def uninstall(package):
+    def uninstall(self, package):
         download = package_download()
         is_my = download.package_list()
         if package in is_my:
@@ -163,7 +169,7 @@ class Action:
             elif system == 'darwin':
                 shell.mac_shell(package, uninstall=True)
 
-    def update(package=None):
+    def update(self, package=None):
         if package == None:
             os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/update.sh?$(date +%s))"')
             print(f"[DPM] self update successfully!!")
@@ -172,7 +178,7 @@ class Action:
             is_my = download.package_list()
             if package in is_my:
                 if len(download.installed_package_list()) > 0:
-                    if os.path.isdir(f"/usr/local/{package}"):
+                    if os.path.isdir(f"/usr/local/DPM/{package}"):
                         pass
                     else:
                         print(f'[{package}] not installed')
@@ -184,7 +190,7 @@ class Action:
                 elif system == 'darwin':
                     shell.mac_shell(package, update=True)
 
-    def help():
+    def help(self):
         print('''[DPM] commands
     dpm install   ----Install package
     dpm search    ----Search package
@@ -192,7 +198,6 @@ class Action:
     dpm list      ----List installed package
     dpm help      ----This help page
     dpm update    ----Update package
-    dpm test1
     ''')
 
 
@@ -200,13 +205,21 @@ class main:
     def __init__(self):
         self.commands()
 
+    def error(self):
+        try:
+            package = sys.argv[2]
+            return package
+        except IndexError:
+            Action().help()
+            sys.exit(1)
+
     def commands(self):
         if len(sys.argv) < 2:
-            help()
+            Action().help()
         else:
             action = sys.argv[1]
             if action == 'search':
-                package = sys.argv[2]
+                package = self.error()
                 if package == 'list':
                     download = package_download()
                     packages = download.package_list()
@@ -218,20 +231,20 @@ class main:
                     download = package_download()
                     download.read_package_list(package)
             elif action == 'install':
-                package = sys.argv[2]
-                Action.install(package)
+                package = self.error()
+                Action().install(package)
             elif action == 'list':
                 download = package_download()
                 download.installed_package_list()
             elif action == 'uninstall':
-                package = sys.argv[2]
-                Action.uninstall(package)
+                package = self.error()
+                Action().uninstall(package)
             elif action == 'help':
-                Action.help()
+                Action().help()
             elif action == 'update':
-                Action.update()
+                Action().update()
             else:
-                Action.help()
+                Action().help()
 
 
 if __name__ == '__main__':
