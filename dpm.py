@@ -250,7 +250,8 @@ class main:
             elif action == 'help':
                 Action().help()
             elif action == 'update':
-                Action().update()
+                package = self.error()
+                Action().update(package)
             else:
                 Action().help()
 
