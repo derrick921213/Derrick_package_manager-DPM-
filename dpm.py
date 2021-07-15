@@ -180,7 +180,12 @@ class Action:
             if package in is_my:
                 if len(download.installed_package_list()) > 0:
                     if os.path.isdir(f"/usr/local/DPM/{package}"):
-                        pass
+                        if os.path.isfile(f"/usr/local/DPM/{package}/package.json"):
+                            with open(f"/usr/local/DPM/{package}/package.json", "r") as f:
+                                installed_info = json.loads(f.read())
+                                print(installed_info)
+                        else:
+                            print(f"[{package}] Update Error")
                     else:
                         print(f"[{package}] not installed")
                 else:
