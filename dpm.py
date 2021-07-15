@@ -84,11 +84,11 @@ class package_download:
 
     def read_package_info(self, package):
         import subprocess
-        cmd = f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;cat `tar -tf $temp/$a | grep 'package.json'`"
+        cmd = f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;tar -xf $temp/$a -C $temp package.json;cat $temp/package.json;rm -rf $temp/package.json"
         output = subprocess.Popen(
             cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        data = output.stdout.read().decode('utf-8')
-        data_json = json.loads(data)
+        data = output.stdout.read()
+        data_json = json.loads(data.decode("utf-8"))
         return data_json
 
     def package_list(self):
@@ -135,7 +135,7 @@ class Action:
                 if file == 0:
                     info = download.read_package_info(package)
                     os.system(
-                        f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;tar -xvf $temp/$a -C /usr/local/DPM/{package};sudo chmod -R 555 /usr/local/DPM/*;sudo ln -s /usr/local/DPM/{package}/{info['main_file']} /usr/local/bin;rm $temp/$a")
+                        f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;tar -xf $temp/$a -C /usr/local/DPM/{package};sudo chmod -R 555 /usr/local/DPM/*;sudo ln -s /usr/local/DPM/{package}/{info['main_file']} /usr/local/bin/{package};rm $temp/$a")
                 else:
                     print('Package NO Found')
                     sys.exit(1)
