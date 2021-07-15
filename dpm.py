@@ -171,7 +171,7 @@ class Action:
                 shell.mac_shell(package, uninstall=True)
 
     def update(self, package=None):
-        if package == None:
+        if package is None:
             os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/update.sh?$(date +%s))"')
             print(f"[DPM] self update successfully!!")
         else:
