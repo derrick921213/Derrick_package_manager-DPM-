@@ -133,8 +133,9 @@ class Action:
             if local == 0:
                 file = os.system(f"cd /tmp;ls | grep '^dpm_{package}'")
                 if file == 0:
-                    success = os.system(
-                        f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;tar -xvf $temp/$a -C /usr/local/DPM/{package};sudo chmod -R 555 /usr/local/DPM/*;sudo ln -s /usr/local/DPM/{package}/{package} /usr/local/bin;rm $temp/$a")
+                    info = download.read_package_info(package)
+                    os.system(
+                        f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;tar -xvf $temp/$a -C /usr/local/DPM/{package};sudo chmod -R 555 /usr/local/DPM/*;sudo ln -s /usr/local/DPM/{package}/{info['main_file']} /usr/local/bin;rm $temp/$a")
                 else:
                     print('Package NO Found')
                     sys.exit(1)
@@ -181,7 +182,9 @@ class Action:
                     if os.path.isdir(f"/usr/local/DPM/{package}"):
                         pass
                     else:
-                        print(f'[{package}] not installed')
+                        print(f"[{package}] not installed")
+                else:
+                    print(f'[{package}] install first')
             else:
                 shell = system_shell()
                 system = shell.system_platform()
