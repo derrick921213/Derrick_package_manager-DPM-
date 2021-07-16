@@ -28,3 +28,4 @@ DPM can install on **Linux or Mac**, so only need to remember one command.
 - **dpm search list** Show all package in my repository
 - **dpm list** Show installed package (Only show install from my repository)
 - **dpm help** Show help page
+- **dpm update** Update installed package
