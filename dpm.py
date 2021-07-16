@@ -121,12 +121,32 @@ class package_download:
 
 
 class Action:
+    def install_update(self, package):
+        if os.path.isdir(f"/usr/local/DPM/{package}") and os.path.isfile(f"/usr/local/bin/{package}"):
+            error = os.system(
+                f'sudo rm -rf /usr/local/bin/{package} /usr/local/DPM/{package}')
+            if error == 0:
+                local = os.system(
+                    f"sudo mkdir -p /usr/local/DPM/{package};sudo chown -R $USER /usr/local/DPM/*")
+                if local == 0:
+                    file = os.system(f"cd /tmp;ls | grep '^dpm_{package}'")
+                    if file == 0:
+                        download = package_download()
+                        info = download.read_package_info(package)
+                        os.system(
+                            f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`;tar -xf $temp/$a -C /usr/local/DPM/{package};sudo chmod -R 555 /usr/local/DPM/*;sudo ln -s /usr/local/DPM/{package}/{info['main_file']} /usr/local/bin/{package};rm $temp/$a")
+                    else:
+                        print('Package NO Found')
+                        sys.exit(1)
+            else:
+                print('Package Error')
+                sys.exit(1)
+
     def install(self, package):
         download = package_download()
         is_my = download.package_list()
         if package in is_my:
             url = download.read_package_list(package)
-            print(url)
             download.download_file(url)
             local = os.system(
                 f"sudo mkdir -p /usr/local/DPM/{package};sudo chown -R $USER /usr/local/DPM/*")
@@ -183,7 +203,14 @@ class Action:
                         if os.path.isfile(f"/usr/local/DPM/{package}/package.json"):
                             with open(f"/usr/local/DPM/{package}/package.json", "r") as f:
                                 installed_info = json.loads(f.read())
-                                print(installed_info)
+                                download = package_download()
+                                download.download_file(
+                                    download.read_package_list(package))
+                                info = download.read_package_info(package)
+                                if info["version"] > installed_info["version"]:
+                                    self.install_update(package)
+                                else:
+                                    print(f"[{package}] no update!!")
                         else:
                             print(f"[{package}] Update Error")
                     else:
