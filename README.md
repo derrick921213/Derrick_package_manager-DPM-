@@ -1,5 +1,9 @@
 # Derrick Package Manager (DPM)
 
+## Translation:zh_tw,en_us
+
+**<a href="https://github.com/derrick921213/flask_web/blob/main/doc/zh_tw.md">zh_tw</a>**
+
 ## Introduction
 
 DPM is a software manager, full name is Derrick Package Manager.  
