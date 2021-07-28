@@ -2,7 +2,7 @@
 
 ## Translation:zh_tw,en_us
 
-**<a href="https://github.com/derrick921213/flask_web/blob/main/doc/zh_tw.md">zh_tw</a>**
+**<a href="https://github.com/derrick921213/Derrick_package_manager-DPM-/blob/main/doc/zh_tw.md">zh_tw</a>**
 
 ## Introduction
 
