@@ -9,8 +9,8 @@ DPM 可以安裝在 **Linux or Mac**, 所以只需要記得一種指令
 
 ### 需求
 
-- Ubuntu/Debain: **sudo apt install python3-pip curl**
-- CentOS/Red hat:**sudo yum|dnf install python3-pip curl**
+- Ubuntu/Debain: `**sudo apt install python3-pip curl**`
+- CentOS/Red hat: `**sudo yum|dnf install python3-pip curl**`
 
 ### 執行下面指令即可安裝 DPM
 
