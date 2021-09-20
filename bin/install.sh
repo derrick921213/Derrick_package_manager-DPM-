@@ -8,14 +8,10 @@ if [ "$?" != '0' ]; then
     exit 1
 fi
 is_install=$(python3 -c "import pyinstaller" && python3 -c "import requests" && python3 -c "import argcomplete")
-if [ "$?" != "0" ]; then
-    sudo pip3 install pyinstaller requests argcomplete pyzshcomplete >/dev/null 2>&1
+sudo pip3 install pyinstaller requests argcomplete pyzshcomplete >/dev/null 2>&1
+if [ "$?" == "0" ]; then
     sudo activate-global-python-argcomplete
     activate_pyzshcomplete
-    if [ "$?" != '0' ]; then
-        echo "Pip3 Error"
-        exit 1
-    fi
 fi
 curl -H "Cache-Control: no-cache" -o dpm.py https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/dpm.py?$(date +%s)
 pyinstaller -F dpm.py >/dev/null 2>&1
