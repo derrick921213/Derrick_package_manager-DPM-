@@ -148,10 +148,11 @@ class system_shell:
 
 
 class package_download:
-    def read_package_list(self, package):
+    def read_package_list(self, package, verbose=False):
         data_json = self.package_list()
         if package in data_json:
-            print(f'[{package}] Found!!')
+            if verbose:
+                print(f'[{package}] Found!!')
             return data_json[package]["url"]
         else:
             print(f'[{package}] not found!!')
@@ -174,12 +175,13 @@ class package_download:
         response.close()
         return data
 
-    def installed_package_list(self):
+    def installed_package_list(self, verbose=False):
         installed_package = os.listdir('/usr/local/DPM')
         packages = len(installed_package)
         if packages > 0:
-            for i in installed_package:
-                print(f"{i}")
+            if verbose:
+                for i in installed_package:
+                    print(f"{i}")
             return installed_package
         else:
             print("Try install some package")
@@ -241,7 +243,10 @@ class Action:
         download = package_download()
         is_my = download.package_list()
         if package in is_my:
-            url = download.read_package_list(package)
+            if verbose:
+                url = download.read_package_list(package, verbose)
+            else:
+                url = download.read_package_list(package)
             download.download_file(url)
             local = os.system(
                 f"sudo mkdir -p /usr/local/DPM/{package};sudo chown -R $USER /usr/local/DPM/*")
@@ -254,10 +259,10 @@ class Action:
                         test = os.system(
                             f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`&&tar -xf $temp/$a -C /usr/local/DPM/{package}&&sudo chmod -R 555 /usr/local/DPM/*&&sudo ln -s /usr/local/DPM/{package}/{info['main_file']} /usr/local/bin/{package}&&rm $temp/$a")
                         if test == 0:
-                            print(f'{package} install Success')
+                            print(f'[{package}] install Success')
                             sys.exit(0)
                         else:
-                            print(f'{package} install Fail')
+                            print(f'[{package}] install Fail')
                             sys.exit(1)
                     else:
                         print('Package NOT FOUND')
@@ -270,10 +275,10 @@ class Action:
                         test1 = os.system(
                             f"temp=/tmp;a=`ls $temp | grep '^dpm_{package}'`>/dev/null 2>&1&&tar -xf $temp/$a -C /usr/local/DPM/{package}>/dev/null 2>&1&&sudo chmod -R 555 /usr/local/DPM/*>/dev/null 2>&1&&sudo ln -s /usr/local/DPM/{package}/{info['main_file']} /usr/local/bin/{package}>/dev/null 2>&1&&rm $temp/$a >/dev/null 2>&1")
                         if test1 == 0:
-                            print(f'{package} install Success')
+                            print(f'[{package}] install Success')
                             sys.exit(0)
                         else:
-                            print(f'{package} install Fail')
+                            print(f'[{package}] install Fail')
                             sys.exit(1)
                     else:
                         print('Package NOT FOUND')
@@ -297,7 +302,7 @@ class Action:
         download = package_download()
         is_my = download.package_list()
         if package in is_my:
-            if len(download.installed_package_list()) > 0:
+            if len(download.installed_package_list(verbose=False)) > 0:
                 if verbose:
                     if os.path.isdir(f"/usr/local/DPM/{package}"):
                         if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package}") == 0:
@@ -310,8 +315,8 @@ class Action:
                         print(f'[{package}] not installed')
                         sys.exit(0)
                 else:
-                    if os.path.isdir(f"/usr/local/DPM/{package} >/dev/null 2>&1"):
-                        if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package} >/dev/null 2>&1") == 0:
+                    if os.path.isdir(f"/usr/local/DPM/{package}"):
+                        if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package} > /dev/null 2>&1") == 0:
                             print(f"[{package}] Removed!!")
                             sys.exit(0)
                         else:
@@ -319,6 +324,7 @@ class Action:
                             sys.exit(1)
                     else:
                         print(f'[{package}] not installed')
+                        sys.exit(1)
         else:
             shell = system_shell()
             system = shell.system_platform()
@@ -348,14 +354,14 @@ class Action:
             download = package_download()
             is_my = download.package_list()
             if package in is_my:
-                if len(download.installed_package_list()) > 0:
+                if len(download.installed_package_list(verbose=False)) > 0:
                     if os.path.isdir(f"/usr/local/DPM/{package}"):
                         if os.path.isfile(f"/usr/local/DPM/{package}/package.json"):
                             with open(f"/usr/local/DPM/{package}/package.json", "r") as f:
                                 installed_info = json.loads(f.read())
                                 download = package_download()
                                 download.download_file(
-                                    download.read_package_list(package))
+                                    download.read_package_list(package, verbose=True))
                                 info = download.read_package_info(package)
                                 if info["version"] > installed_info["version"]:
                                     self.install_update(package, verbose)
@@ -395,7 +401,7 @@ class main:
         elif args == "uninstall":
             act.uninstall(_package, verbose)
         elif args == "list":
-            package_download().installed_package_list()
+            package_download().installed_package_list(verbose=True)
         elif args == "search":
             if 'list' in package[0] or 'ls' in package[0]:
                 download = package_download()
@@ -405,7 +411,7 @@ class main:
                     print(keys)
                 print("----These package can install from repository----")
             else:
-                package_download().read_package_list(_package)
+                package_download().read_package_list(_package, verbose=True)
         elif args == "update":
             act.update(_package, verbose)
 
