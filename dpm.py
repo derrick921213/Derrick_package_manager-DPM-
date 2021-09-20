@@ -1,3 +1,9 @@
+# PYTHON_ARGCOMPLETE_OK
+# PYZSHCOMPLETE_OK
+import argparse as _arg
+from argparse import RawTextHelpFormatter
+import argcomplete as _auto
+import pyzshcomplete as _auto_zsh
 from sys import platform as plat
 from urllib.request import urlopen
 import json
@@ -12,7 +18,7 @@ class system_shell:
             sys.exit(1)
         return 'linux' if plat == 'linux' else 'darwin'
 
-    def linux_shell(self, package, install=False, uninstall=False, update=False):
+    def linux_shell(self, package, install=False, uninstall=False, update=False, verbose=False):
         if install is True and uninstall is False and update is False:
             if os.system("which apt >/dev/null") == 0:
                 if os.system(f"sudo apt install {package} -y") == 0:
@@ -52,7 +58,7 @@ class system_shell:
         else:
             print("Application Error")
 
-    def mac_shell(self, package, install=False, uninstall=False, update=False):
+    def mac_shell(self, package, install=False, uninstall=False, update=False, verbose=False):
         if install is True and uninstall is False and update is False:
             if os.system("which brew >/dev/null") == 0:
                 if os.system(f"brew install {package}") == 0:
@@ -237,51 +243,45 @@ class Action:
 
 
 class main:
-    def __init__(self):
-        self.commands()
+    def __init__(self, args, package, verbose=False):
+        self.__commands(args, package, verbose)
 
-    def error(self):
-        try:
-            package = sys.argv[2]
-            return package
-        except IndexError:
-            Action().help()
-            sys.exit(1)
-
-    def commands(self):
-        if len(sys.argv) < 2:
-            Action().help()
-        else:
-            action = sys.argv[1]
-            if action == 'search':
-                package = self.error()
-                if package == 'list':
-                    download = package_download()
-                    packages = download.package_list()
-                    print('---------------')
-                    for keys in packages.keys():
-                        print(keys)
-                    print("----These package can install from repository----")
-                else:
-                    download = package_download()
-                    download.read_package_list(package)
-            elif action == 'install':
-                package = self.error()
-                Action().install(package)
-            elif action == 'list':
+    def __commands(self, args, package, verbose):
+        act = Action()
+        _package = " ".join(package)
+        if args == "install":
+            act.install(_package)
+        elif args == "uninstall":
+            act.uninstall(_package)
+        elif args == "list":
+            package_download().installed_package_list()
+        elif args == "search":
+            if 'list' in package[0] or 'ls' in package[0]:
                 download = package_download()
-                download.installed_package_list()
-            elif action == 'uninstall':
-                package = self.error()
-                Action().uninstall(package)
-            elif action == 'help':
-                Action().help()
-            elif action == 'update':
-                package = self.error()
-                Action().update(package)
+                packages = download.package_list()
+                print('---------------')
+                for keys in packages.keys():
+                    print(keys)
+                print("----These package can install from repository----")
             else:
-                Action().help()
+                package_download().read_package_list(_package)
+        elif args == "update":
+            act.update(_package)
 
 
 if __name__ == '__main__':
-    main()
+    parser = _arg.ArgumentParser(
+        prog="dpm", description="DPM is a package manager", formatter_class=RawTextHelpFormatter, epilog="Further help: \n  https://github.com/derrick921213/Derrick_package_manager-DPM-")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-v", "--verbose", action="store_true", help="開啟囉唆模式")
+    parser.add_argument("commands",  choices=('search', 'install', 'list',
+                        'uninstall', 'update'), help="Choose one command to execute!")
+    parser.add_argument("package", nargs='*',
+                        help="Wants to use packages or command")
+    _auto.autocomplete(parser)
+    _auto_zsh.autocomplete(parser)
+    args = parser.parse_args()
+    if args.verbose:
+        main(args.commands, args.package, verbose=True)
+    else:
+        main(args.commands, args.package)
