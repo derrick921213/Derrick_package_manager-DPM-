@@ -7,9 +7,9 @@ if [ "$?" != '0' ]; then
     echo "Python not install"
     exit 1
 fi
-sudo activate-global-python-argcomplete
+pip3 install --user pyinstaller requests argcomplete pyzshcomplete
+activate-global-python-argcomplete
 activate_pyzshcomplete
-
 curl -H "Cache-Control: no-cache" -o dpm.py https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/dpm.py?$(date +%s)
 pyinstaller -F dpm.py >/dev/null 2>&1
 if [ "$?" != "0" ]; then
