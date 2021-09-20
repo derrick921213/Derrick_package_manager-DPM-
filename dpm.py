@@ -264,7 +264,7 @@ class Action:
                         sys.exit(1)
                 else:
                     file = os.system(
-                        f"cd /tmp;ls | grep '^dpm_{package}'>/dev/null")
+                        f"cd /tmp;ls | grep '^dpm_{package}' >/dev/null 2>&1")
                     if file == 0:
                         info = download.read_package_info(package)
                         test1 = os.system(
@@ -310,7 +310,7 @@ class Action:
                         print(f'[{package}] not installed')
                         sys.exit(0)
                 else:
-                    if os.path.isdir(f"/usr/local/DPM/{package}"):
+                    if os.path.isdir(f"/usr/local/DPM/{package} >/dev/null 2>&1"):
                         if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package} >/dev/null 2>&1") == 0:
                             print(f"[{package}] Removed!!")
                             sys.exit(0)
