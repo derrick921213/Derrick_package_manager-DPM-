@@ -332,7 +332,7 @@ class Action:
                 shell.mac_shell(package, uninstall=True)
 
     def update(self, package=None, verbose=False):
-        if package is None:
+        if package is None or package == ' ':
             if verbose:
                 test = os.system(
                     '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/derrick921213/Derrick_package_manager-DPM-/main/bin/update.sh?$(date +%s))"')
@@ -386,7 +386,10 @@ class main:
 
     def __commands(self, args, package, verbose):
         act = Action()
-        _package = " ".join(package)
+        if package:
+            _package = " ".join(package)
+        else:
+            _package = None
         if args == "install":
             act.install(_package, verbose)
         elif args == "uninstall":
