@@ -27,5 +27,7 @@ sudo mv dist/dpm /usr/local/bin
 sudo rm -rf __pycache__ dist build dpm.spec dpm.py
 echo [DPM] Install successful.
 echo "If your shell is zsh, add "
+echo 'autoload -U bashcompinit;bashcompinit'
+echo 'AND'
 echo 'eval "$(~/.local/bin/register-python-argcomplete dpm)"'
 echo 'in ~/.zshrc'
