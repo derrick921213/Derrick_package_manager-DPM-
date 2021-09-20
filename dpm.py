@@ -302,17 +302,23 @@ class Action:
                     if os.path.isdir(f"/usr/local/DPM/{package}"):
                         if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package}") == 0:
                             print(f"[{package}] Removed!!")
+                            sys.exit(0)
                         else:
                             print(f"Remove [{package}] Error!!")
+                            sys.exit(1)
                     else:
                         print(f'[{package}] not installed')
-                if os.path.isdir(f"/usr/local/DPM/{package} >/dev/null 2>&1"):
-                    if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package} >/dev/null 2>&1") == 0:
-                        print(f"[{package}] Removed!!")
-                    else:
-                        print(f"Remove [{package}] Error!!")
+                        sys.exit(0)
                 else:
-                    print(f'[{package}] not installed')
+                    if os.path.isdir(f"/usr/local/DPM/{package}"):
+                        if os.system(f"sudo rm -rf /usr/local/DPM/{package} /usr/local/bin/{package} >/dev/null 2>&1") == 0:
+                            print(f"[{package}] Removed!!")
+                            sys.exit(0)
+                        else:
+                            print(f"Remove [{package}] Error!!")
+                            sys.exit(1)
+                    else:
+                        print(f'[{package}] not installed')
         else:
             shell = system_shell()
             system = shell.system_platform()
