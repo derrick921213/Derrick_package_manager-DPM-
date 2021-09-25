@@ -20,7 +20,9 @@ sudo mv dist/dpm /usr/local/bin
 sudo rm -rf __pycache__ dist build dpm.spec dpm.py
 cp ~/.zshrc ~/.zshrc.bak
 cp ~/.bashrc ~/.bashrc.bak
+echo 'export PATH="~/.local/bin:$PATH"' >>~/.zshrc
 echo 'autoload -U bashcompinit;bashcompinit' >>~/.zshrc
-echo 'eval "$(~/.local/bin/register-python-argcomplete dpm)"' >>~/.zshrc
-echo 'eval "$(~/.local/bin/register-python-argcomplete dpm)"' >>~/.bashrc
+echo 'eval "$(register-python-argcomplete dpm)"' >>~/.zshrc
+echo 'export PATH="~/.local/bin:$PATH"' >>~/.bashrc
+echo 'eval "$(register-python-argcomplete dpm)"' >>~/.bashrc
 echo [DPM] Install successful.
