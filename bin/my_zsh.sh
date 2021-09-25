@@ -37,7 +37,7 @@ function Download(){
     curl -O  https://mcserver.tplinkdns.com/file/.zshrc
     curl -O  https://mcserver.tplinkdns.com/file/.vimrc
     mv .zshrc .vimrc ~
-    source ~/zshrc
+    source ~/.zshrc
 }
 
 function config(){
