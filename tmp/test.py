@@ -40,3 +40,14 @@
             else:
                 Action().help()
         '''
+#from function import file_sum_sha256
+
+import os
+import sys
+
+sys.path.append(os.getcwd())
+import function
+
+print(os.getcwd())
+print(function.file_sum_sha256.__name__)
+print(function.file_sum_sha256.__package__)
